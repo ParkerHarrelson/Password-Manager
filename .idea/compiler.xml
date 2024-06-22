@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="lib_passmanager_crypto" />
         <module name="ws_passmanager_crud" />
       </profile>
     </annotationProcessing>

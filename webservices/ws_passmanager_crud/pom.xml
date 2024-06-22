@@ -54,6 +54,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.passmanager</groupId>
+            <artifactId>lib_passmanager_crypto</artifactId>
+            <version>LOCAL-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
