@@ -32,7 +32,7 @@ public class EncryptionService {
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
-    public static byte[] prepareKey(String key) {
+    private static byte[] prepareKey(String key) {
         byte[] keyBytes = key.getBytes();
         if (keyBytes.length < 32) {
             keyBytes = Arrays.copyOf(keyBytes, 32); // Pad with zeros
@@ -45,9 +45,8 @@ public class EncryptionService {
         int Nr = Nk + 6; // Number of rounds
         int Nb = 4;  // Number of columns (32-bit words) comprising the State
 
-        // Check if key length is valid (must be 16, 24, or 32 bytes for AES-128, AES-192, AES-256)
         if (key.length != 16 && key.length != 24 && key.length != 32) {
-            throw new IllegalArgumentException("Invalid key length: " + key.length);
+            throw new IllegalArgumentException(STR."Invalid key length: \{key.length}");
         }
 
         // Create the round keys array. Each round key is a flat array of 16 bytes.
@@ -67,12 +66,12 @@ public class EncryptionService {
             temp = Arrays.copyOfRange(roundKeys[(i - 1) / Nb], 4 * ((i - 1) % Nb), 4 * ((i - 1) % Nb) + 4);
 
             if (i % Nk == 0) {
-                temp = subWord(rotWord(temp));
+                subWord(rotWord(temp));
                 for (int j = 0; j < 4; j++) {
                     temp[j] ^= (byte) RCON[i / Nk][j];
                 }
             } else if (Nk > 6 && i % Nk == 4) {
-                temp = subWord(temp);
+                subWord(temp);
             }
 
             for (int j = 0; j < 4; j++) {
@@ -90,11 +89,10 @@ public class EncryptionService {
     }
 
 
-    private byte[] subWord(byte[] word) {
+    private void subWord(byte[] word) {
         for (int i = 0; i < word.length; i++) {
             word[i] = (byte) SBOX[word[i] & 0xFF];
         }
-        return word;
     }
 
     private byte[] rotWord(byte[] word) {
@@ -108,11 +106,10 @@ public class EncryptionService {
         return word;
     }
 
-    private byte[] subBytes(byte[] state) {
+    private void subBytes(byte[] state) {
         for (int i = 0; i < state.length; i++) {
             state[i] = (byte) SBOX[state[i] & 0xFF];
         }
-        return state;
     }
 
     private byte[] shiftRows(byte[] state) {
@@ -187,13 +184,13 @@ public class EncryptionService {
         state = addRoundKey(state, roundKeys[0]);
 
         for (int round = 1; round < roundKeys.length - 1; round++) {
-            state = subBytes(state);
+            subBytes(state);
             state = shiftRows(state);
             state = mixColumns(state);
             state = addRoundKey(state, roundKeys[round]);
         }
 
-        state = subBytes(state);
+        subBytes(state);
         state = shiftRows(state);
         state = addRoundKey(state, roundKeys[roundKeys.length - 1]);
 
