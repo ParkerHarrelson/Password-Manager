@@ -27,7 +27,7 @@ Upon account creation, a user will provide their name, email address, username, 
 5. Key Storage: The [RSA Public Key](definitions.md#rsa-public-key), the encrypted RSA Private Key, and the salt are stored in the database. The secure key is stored securely on the user's device.
 6. Password Storage: The salt-password combination is hashed using SHA-256 and stored in the database, along with the salt in its own field.
 
-Another critical process during account creation is the generation of a [recovery key](definitions.md#recovery-key). The recovery key is not stored in the database and must be recorded by the user. This key is also used to encrypt the RSA Private Key, and the result is stored in the database alongside the password-derived encrypted RSA key. This results in two encrypted versions of the user's private key in the database. If the user forgets their password, the recovery key can be used to decrypt their RSA private key. The user can then provide a new password, which will generate a new password-derived symmetric key to re-encrypt the RSA private key.
+Another critical process during account creation is the generation of a [recovery key](definitions.md#recovery-key). The recovery key is generated along with a unique salt. The recovery key and its salt are hashed usingSHA-256, and the resulting hash is stored in the database. The recovery key itself is not stored in the database and must be recorded by the user. This key, in combination with its salt, is used to encrypt the RSA Private Key, and the result is stored in the database alongside the password-derived encrypted RSA key. This results in two encrypted versions of the user's private key in the database. If the user forgets their password, the recovery key can be used to decrypt their RSA private key. The user can then provide a new password, which will generate a new password-derived symmetric key to re-encrypt the RSA private key.
 
 The user will have the option, during account creation, to enable whichever multi-factor authentication methods they want, but will have to pick at least two different options.
 
@@ -83,9 +83,31 @@ When a user wants to view the contents of a lock, the following decryption proce
 
 ### Database Layout
 
-![Database Layout Version 1.0](../database/CipherLock%20Database%20Design%20Initial.png)
+![Database Layout Version 1.1](../database/CipherLock%20Database%20ERR%20Design%201.1.png)
 
 ### Webservices
 
+These webservices are responsible for handling all backend logic for CipherLock. These webservices can be interacted with via the ***cipherlock_api***.
+
+#### ws_cipherlock_auth
+
+#### ws_cipherlock_user
+
+#### ws_cipherlock_key_management
+
+#### ws_cipherlock_locks
+
+#### ws_cipherlock_mfa
+
+#### ws_cipherlock_notifications
+
+
+#### 
 
 ### Libraries
+
+#### lib_cipherlock_crypto
+
+#### lib_cipherlock_entity
+
+#### lib_cipherlock_dto
