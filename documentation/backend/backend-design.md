@@ -101,8 +101,9 @@ These webservices are responsible for handling all backend logic for CipherLock.
 
 #### ws_cipherlock_notifications
 
+### API
 
-#### 
+#### cipherlock_api
 
 ### Libraries
 
