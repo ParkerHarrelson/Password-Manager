@@ -14,7 +14,7 @@ import static org.cipherlock.constants.EncryptionConstants.SBOX;
  * a cipher text string is returned.
  */
 @Service
-public class EncryptionService {
+public class AESEncryptionService {
 
     public String encrypt(String plaintext, String key) {
         byte[] paddedPlaintext = pad(plaintext.getBytes());

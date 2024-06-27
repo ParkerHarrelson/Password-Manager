@@ -6,6 +6,15 @@
       <list>
         <option value="$PROJECT_DIR$/webservices/ws_passmanager_crud/pom.xml" />
         <option value="$PROJECT_DIR$/libraries/lib_passmanager_crypto/lib_passmanager_crypto/pom.xml" />
+        <option value="$PROJECT_DIR$/webservices/ws_cipherlock_user/pom.xml" />
+        <option value="$PROJECT_DIR$/webservices/ws_cipherlock_auth/pom.xml" />
+        <option value="$PROJECT_DIR$/webservices/ws_cipherlock_key_management/pom.xml" />
+        <option value="$PROJECT_DIR$/webservices/ws_cipherlock_locks/pom.xml" />
+        <option value="$PROJECT_DIR$/webservices/ws_cipherlock_mfa/pom.xml" />
+        <option value="$PROJECT_DIR$/webservices/ws_cipherlock_notifications/pom.xml" />
+        <option value="$PROJECT_DIR$/api/cipherlock_api/pom.xml" />
+        <option value="$PROJECT_DIR$/libraries/lib_cipherlock_crypto/pom.xml" />
+        <option value="$PROJECT_DIR$/libraries/lib_cipherlock_entity/pom.xml" />
       </list>
     </option>
   </component>

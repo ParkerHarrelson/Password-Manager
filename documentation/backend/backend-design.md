@@ -112,3 +112,22 @@ These webservices are responsible for handling all backend logic for CipherLock.
 #### lib_cipherlock_entity
 
 #### lib_cipherlock_dto
+
+### Timeline Implementation Order
+
+Summary of Order of Implementation
+Libraries:
+lib_cipherlock_entity
+lib_cipherlock_dto
+lib_cipherlock_crypto
+Core Services:
+ws_cipherlock_key_management
+ws_cipherlock_auth
+ws_cipherlock_user
+Supporting Services:
+ws_cipherlock_mfa
+ws_cipherlock_locks
+Notification Services:
+ws_cipherlock_notifications
+API Gateway:
+cipherlock_api

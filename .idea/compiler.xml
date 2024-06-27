@@ -6,14 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="lib_cipherlock_crypto" />
+        <module name="ws_cipherlock_user" />
+        <module name="ws_cipherlock_mfa" />
+        <module name="ws_cipherlock_notifications" />
+        <module name="ws_cipherlock_locks" />
         <module name="ws_cipherlock_auth" />
+        <module name="lib_cipherlock_crypto" />
+        <module name="lib_cipherlock_entity" />
+        <module name="cipherlock_api" />
+        <module name="ws_cipherlock_key_management" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cipherlock_api" options="-parameters" />
+      <module name="lib_cipherlock_entity" options="-parameters" />
       <module name="ws_cipherlock_auth" options="-parameters" />
+      <module name="ws_cipherlock_key_management" options="-parameters" />
+      <module name="ws_cipherlock_locks" options="-parameters" />
+      <module name="ws_cipherlock_mfa" options="-parameters" />
+      <module name="ws_cipherlock_notifications" options="-parameters" />
+      <module name="ws_cipherlock_user" options="-parameters" />
     </option>
   </component>
 </project>

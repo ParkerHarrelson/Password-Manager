@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/api/cipherlock_api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/libraries/lib_cipherlock_crypto/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/libraries/lib_cipherlock_crypto/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/libraries/lib_cipherlock_entity/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/webservices/ws_cipherlock_auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webservices/ws_cipherlock_key_management/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webservices/ws_cipherlock_locks/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webservices/ws_cipherlock_mfa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webservices/ws_cipherlock_notifications/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webservices/ws_cipherlock_user/src/main/java" charset="UTF-8" />
   </component>
 </project>
