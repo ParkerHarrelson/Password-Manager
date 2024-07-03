@@ -1,5 +1,6 @@
 package org.cipherlock.service;
 
+import com.nulabinc.zxcvbn.Strength;
 import lombok.AllArgsConstructor;
 import org.cipherlock.dto.ResponseDTO.PasswordValidationResponseDTO;
 import org.cipherlock.utils.PasswordUtils;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MasterPasswordService {
 
-    public Integer checkPasswordStrength(String password) {
+    private final PasswordUtils passwordUtils;
 
-        return 0;
+    public Integer checkPasswordStrength(String password) {
+        Strength strength = passwordUtils.checkPasswordStrength(password);
+        return strength.getScore();
     }
 
     /**
@@ -21,7 +24,7 @@ public class MasterPasswordService {
      * @return The result of the validation check.
      */
     public PasswordValidationResponseDTO validatePassword(String password) {
-        return PasswordUtils.validatePassword(password);
+        return passwordUtils.validatePassword(password);
     }
 
     /**
@@ -30,6 +33,6 @@ public class MasterPasswordService {
      * @return The generated password.
      */
     public String generatePassword() {
-        return PasswordUtils.generateStrongPassword();
+        return passwordUtils.generateStrongPassword();
     }
 }

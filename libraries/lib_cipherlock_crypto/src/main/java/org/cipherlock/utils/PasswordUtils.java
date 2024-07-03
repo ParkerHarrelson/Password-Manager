@@ -1,9 +1,12 @@
 package org.cipherlock.utils;
 
 import com.nulabinc.zxcvbn.Strength;
-import com.nulabinc.zxcvbn.Zxcvbn;
+import lombok.AllArgsConstructor;
+import org.cipherlock.rules.PasswordRules;
 import org.cipherlock.dto.ResponseDTO.PasswordValidationResponseDTO;
+import org.cipherlock.rules.SpecialCharacterData;
 import org.passay.*;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -13,14 +16,16 @@ import java.util.Base64;
 import java.util.List;
 
 import static org.cipherlock.constants.EncryptionConstants.SHA_512;
-import static org.cipherlock.constants.PasswordRules.PASSWORD_VALIDATOR;
-import static org.cipherlock.constants.PasswordRules.ZXCVBN;
 
 /**
  * This class is responsible for everything password related. Functionality exists for hashing passwords,
  * comparing passwords, checking passwords against rules, checking passwords for strength, etc.
  */
+@Component
+@AllArgsConstructor
 public class PasswordUtils {
+
+    private final PasswordRules passwordRules;
 
     /**
      * Hash a password with a salt using SHA-512.
@@ -30,7 +35,7 @@ public class PasswordUtils {
      * @return the hashed password
      * @throws NoSuchAlgorithmException if the specified algorithm is not available
      */
-    public static String hashPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
+    public String hashPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance(SHA_512);
 
         digest.update(salt);
@@ -52,7 +57,7 @@ public class PasswordUtils {
      * @return true if the password matches, false otherwise
      * @throws NoSuchAlgorithmException if the specified algorithm is not available
      */
-    public static boolean verifyPassword(String password, String storedHash, byte[] salt) throws NoSuchAlgorithmException {
+    public boolean verifyPassword(String password, String storedHash, byte[] salt) throws NoSuchAlgorithmException {
         String newHash = hashPassword(password, salt);
         return storedHash.equals(newHash);
     }
@@ -63,8 +68,8 @@ public class PasswordUtils {
      * @param password the password to check
      * @return the strength score (0-4) and feedback
      */
-    public static Strength checkPasswordStrength(String password) {
-        return ZXCVBN.measure(password);
+    public Strength checkPasswordStrength(String password) {
+        return passwordRules.zxcvbn.measure(password);
     }
 
     /**
@@ -73,12 +78,13 @@ public class PasswordUtils {
      * @param password the password to check
      * @return a PasswordValidationResponseDTO object with the validation results
      */
-    public static PasswordValidationResponseDTO validatePassword(String password) {
-        RuleResult result = PASSWORD_VALIDATOR.validate(new PasswordData(password));
+    public PasswordValidationResponseDTO validatePassword(String password) {
+        password = password.replaceAll("\\s+", "");
+        RuleResult result = passwordRules.passwordValidator.validate(new PasswordData(password));
 
         return PasswordValidationResponseDTO.builder()
                 .valid(result.isValid())
-                .messages(PASSWORD_VALIDATOR.getMessages(result))
+                .messages(passwordRules.passwordValidator.getMessages(result))
                 .build();
     }
 
@@ -87,14 +93,25 @@ public class PasswordUtils {
      *
      * @return a strong password
      */
-    public static String generateStrongPassword() {
+    public String generateStrongPassword() {
         PasswordGenerator generator = new PasswordGenerator();
         List<CharacterRule> rules = Arrays.asList(
                 new CharacterRule(EnglishCharacterData.UpperCase, 2),
                 new CharacterRule(EnglishCharacterData.LowerCase, 2),
                 new CharacterRule(EnglishCharacterData.Digit, 2),
-                new CharacterRule(EnglishCharacterData.Special, 2)
+                new CharacterRule(new SpecialCharacterData(), 2)
         );
-        return generator.generatePassword(16, rules);
+
+        String password = generator.generatePassword(16, rules);
+        return insertDashes(password);
     }
+
+    private String insertDashes(String password) {
+        StringBuilder formattedPassword = new StringBuilder(password);
+        formattedPassword.insert(5, '-');
+        formattedPassword.insert(10, '-');
+        formattedPassword.insert(15, '-');
+        return formattedPassword.toString();
+    }
+
 }

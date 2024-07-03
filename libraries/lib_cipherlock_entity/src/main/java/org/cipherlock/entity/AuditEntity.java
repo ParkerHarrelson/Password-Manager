@@ -16,23 +16,23 @@ import java.time.OffsetDateTime;
 @EntityListeners(value = AuditingEntityListener.class)
 public class AuditEntity implements Serializable {
 
-    @Column(name = "CreateTimestamp", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "created_timestamp", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreatedDate
     private OffsetDateTime createTimestamp;
 
-    @Column(name = "LastUpdateTimestamp", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "last_updated_timestamp", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @JsonIgnore
     @LastModifiedDate
     private OffsetDateTime lastUpdateTimestamp;
 
-    @Column(name = "LastUpdateUserID", nullable = false)
+    @Column(name = "updated_by", nullable = false)
     @JsonIgnore
     @LastModifiedBy
-    private String lastUpdateUserID;
+    private String updatedBy;
 
     @PrePersist
     public void prePersist() {
-        setLastUpdateUserID("CIPHERLOCK");
+        setUpdatedBy("CIPHERLOCK");
     }
 
 }

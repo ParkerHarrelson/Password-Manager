@@ -30,6 +30,7 @@
     <properties>
         <java.version>22</java.version>
         <lib.cipherlock.crypto.version>LOCAL-SNAPSHOT</lib.cipherlock.crypto.version>
+        <lib.cipherlock.entity.version>LOCAL-SNAPSHOT</lib.cipherlock.entity.version>
     </properties>
 
     <dependencies>
@@ -62,6 +63,12 @@
             <groupId>org.cipherlock</groupId>
             <artifactId>lib_cipherlock_crypto</artifactId>
             <version>${lib.cipherlock.crypto.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.cipherlock</groupId>
+            <artifactId>lib_cipherlock_entity</artifactId>
+            <version>${lib.cipherlock.entity.version}</version>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package org.cipherlock.constants;
+package org.cipherlock.rules;
 
 import com.nulabinc.zxcvbn.Zxcvbn;
 import lombok.extern.slf4j.Slf4j;
@@ -6,29 +6,41 @@ import org.passay.*;
 import org.passay.dictionary.WordListDictionary;
 import org.passay.dictionary.WordLists;
 import org.passay.dictionary.sort.ArraysSort;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 @Slf4j
+@Component
 public final class PasswordRules {
 
-    public static final Zxcvbn ZXCVBN = new Zxcvbn();
-    public static final PasswordValidator PASSWORD_VALIDATOR;
+    public final Zxcvbn zxcvbn;
+    public final PasswordValidator passwordValidator;
 
-    static {
+    public PasswordRules() {
+        this.zxcvbn = new Zxcvbn();
+
+        InputStream inputStream = null;
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("src/main/resources/dictionary.txt"));
+            // Load the file from the resources directory
+            inputStream = PasswordRules.class.getClassLoader().getResourceAsStream("dictionary.txt");
+            if (inputStream == null) {
+                throw new IOException("Dictionary file not found in resources.");
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
             WordListDictionary dictionary = new WordListDictionary(WordLists.createFromReader(
-                    new BufferedReader[] { reader },
+                    new BufferedReader[]{reader},
                     false,
                     new ArraysSort()
             ));
 
-            PASSWORD_VALIDATOR = new PasswordValidator(Arrays.asList(
+            this.passwordValidator = new PasswordValidator(Arrays.asList(
                     new LengthRule(14, 128),
                     new CharacterRule(EnglishCharacterData.UpperCase, 1),
                     new CharacterRule(EnglishCharacterData.LowerCase, 1),
@@ -51,9 +63,13 @@ public final class PasswordRules {
                     log.error("Error closing dictionary file reader: {}", e.getMessage());
                 }
             }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.error("Error closing dictionary file input stream: {}", e.getMessage());
+                }
+            }
         }
-    }
-
-    private PasswordRules() {
     }
 }
