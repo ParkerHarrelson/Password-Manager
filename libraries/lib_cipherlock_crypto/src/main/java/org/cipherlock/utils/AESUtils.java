@@ -1,6 +1,4 @@
-package org.cipherlock.service;
-
-import org.springframework.stereotype.Service;
+package org.cipherlock.utils;
 
 import java.util.Arrays;
 import java.util.Base64;
@@ -13,10 +11,9 @@ import static org.cipherlock.constants.EncryptionConstants.SBOX;
  * the AES encryption algorithm. Plaintext and Key are provided and
  * a cipher text string is returned.
  */
-@Service
-public class AESEncryptionService {
+public class AESUtils {
 
-    public String encrypt(String plaintext, String key) {
+    public static String encrypt(String plaintext, String key) {
         byte[] paddedPlaintext = pad(plaintext.getBytes());
         byte[] keyBytes = prepareKey(key);
         byte[][] roundKeys = keyExpansion(keyBytes);
@@ -40,7 +37,7 @@ public class AESEncryptionService {
         return keyBytes;
     }
 
-    private byte[][] keyExpansion(byte[] key) {
+    private static byte[][] keyExpansion(byte[] key) {
         int Nk = key.length / 4;  // Number of 32-bit words in the key
         int Nr = Nk + 6; // Number of rounds
         int Nb = 4;  // Number of columns (32-bit words) comprising the State
@@ -60,7 +57,7 @@ public class AESEncryptionService {
             roundKeys[i / Nb][4 * (i % Nb) + 3] = key[4 * i + 3];
         }
 
-        byte[] temp = new byte[4];
+        byte[] temp;
 
         for (int i = Nk; i < Nb * (Nr + 1); i++) {
             temp = Arrays.copyOfRange(roundKeys[(i - 1) / Nb], 4 * ((i - 1) % Nb), 4 * ((i - 1) % Nb) + 4);
@@ -89,13 +86,13 @@ public class AESEncryptionService {
     }
 
 
-    private void subWord(byte[] word) {
+    private static void subWord(byte[] word) {
         for (int i = 0; i < word.length; i++) {
             word[i] = (byte) SBOX[word[i] & 0xFF];
         }
     }
 
-    private byte[] rotWord(byte[] word) {
+    private static byte[] rotWord(byte[] word) {
         byte temp = word[0];
 
         for (int i = 0; i < word.length - 1; i++) {
@@ -106,13 +103,13 @@ public class AESEncryptionService {
         return word;
     }
 
-    private void subBytes(byte[] state) {
+    private static void subBytes(byte[] state) {
         for (int i = 0; i < state.length; i++) {
             state[i] = (byte) SBOX[state[i] & 0xFF];
         }
     }
 
-    private byte[] shiftRows(byte[] state) {
+    private static byte[] shiftRows(byte[] state) {
         byte[] shifted = new byte[state.length];
 
         shifted[0] = state[0];
@@ -138,7 +135,7 @@ public class AESEncryptionService {
         return shifted;
     }
 
-    private byte[] mixColumns(byte[] state) {
+    private static byte[] mixColumns(byte[] state) {
         byte[] mixed = new byte[state.length];
 
         for (int i = 0; i < 4; i++) {
@@ -152,7 +149,7 @@ public class AESEncryptionService {
         return mixed;
     }
 
-    private int mul(int a, int b) {
+    private static int mul(int a, int b) {
         int p = 0;
         int hiBitSet;
         for (int counter = 0; counter < 8; counter++) {
@@ -169,7 +166,7 @@ public class AESEncryptionService {
         return p;
     }
 
-    private byte[] addRoundKey(byte[] state, byte[] roundKey) {
+    private static byte[] addRoundKey(byte[] state, byte[] roundKey) {
         byte[] result = new byte[state.length];
         for (int i = 0; i < state.length; i++) {
             result[i] = (byte) (state[i] ^ roundKey[i]);
@@ -178,7 +175,7 @@ public class AESEncryptionService {
     }
 
 
-    private byte[] encryptBlock(byte[] block, byte[][] roundKeys) {
+    private static byte[] encryptBlock(byte[] block, byte[][] roundKeys) {
         byte[] state = block.clone();
 
         state = addRoundKey(state, roundKeys[0]);
@@ -197,7 +194,7 @@ public class AESEncryptionService {
         return state;
     }
 
-    private byte[] pad(byte[] input) {
+    private static byte[] pad(byte[] input) {
         int padding = 16 - (input.length % 16);
         byte[] padded = Arrays.copyOf(input, input.length + padding);
         for (int i = input.length; i < padded.length; i++) {

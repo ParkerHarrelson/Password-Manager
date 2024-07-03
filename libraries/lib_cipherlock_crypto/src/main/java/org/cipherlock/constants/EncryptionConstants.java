@@ -2,6 +2,14 @@ package org.cipherlock.constants;
 
 public class EncryptionConstants {
 
+    // PBKDF2 Constants
+    public static final int PBKDF2_ITERATIONS = 65536;
+    public static final int PBKDF2_KEY_LENGTH = 256;
+    public static final String PBKDF2_INSTANCE = "PBKDF2WithHmacSHA256";
+
+    // Password Utils Constants
+    public static final String SHA_512 = "SHA-512";
+
     // AES Constants
     public static final int[] SBOX = {
             0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,

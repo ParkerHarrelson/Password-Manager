@@ -1,6 +1,6 @@
 package org.cipherlock.configuration;
 
-import org.cipherlock.service.AESEncryptionService;
+import org.cipherlock.utils.AESUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class CryptoConfiguration {
 
     @Bean
-    public AESEncryptionService encryptionService() {
-        return new AESEncryptionService();
+    public AESUtils encryptionService() {
+        return new AESUtils();
     }
 
 }

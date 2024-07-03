@@ -10,6 +10,7 @@
         <module name="ws_cipherlock_mfa" />
         <module name="ws_cipherlock_notifications" />
         <module name="ws_cipherlock_locks" />
+        <module name="lib_cipherlock_dto" />
         <module name="ws_cipherlock_auth" />
         <module name="lib_cipherlock_crypto" />
         <module name="lib_cipherlock_entity" />
@@ -21,6 +22,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cipherlock_api" options="-parameters" />
+      <module name="lib_cipherlock_dto" options="-parameters" />
       <module name="lib_cipherlock_entity" options="-parameters" />
       <module name="ws_cipherlock_auth" options="-parameters" />
       <module name="ws_cipherlock_key_management" options="-parameters" />

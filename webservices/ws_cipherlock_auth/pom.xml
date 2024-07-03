@@ -26,9 +26,12 @@
         <tag/>
         <url/>
     </scm>
+
     <properties>
         <java.version>22</java.version>
+        <lib.cipherlock.crypto.version>LOCAL-SNAPSHOT</lib.cipherlock.crypto.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,9 +59,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.passmanager</groupId>
-            <artifactId>lib_passmanager_crypto</artifactId>
-            <version>LOCAL-SNAPSHOT</version>
+            <groupId>org.cipherlock</groupId>
+            <artifactId>lib_cipherlock_crypto</artifactId>
+            <version>${lib.cipherlock.crypto.version}</version>
         </dependency>
     </dependencies>
 

@@ -45,7 +45,7 @@ Security is of the utmost importance for a password manager, so there will be a 
 
 1. Email Verification
 2. Phone Verification
-4. Authenticator App of User's Choosing
+3. Authenticator App of User's Choosing
 
 When the user attempts to log in, the following process will take place to ensure secure authentication:
 
@@ -80,6 +80,23 @@ When a user wants to view the contents of a lock, the following decryption proce
 
 1. AES Key Decryption: The AES key used to encrypt the lock is decrypted using the user's RSA Private Key.
 2. Lock Decryption: The now decrypted AES key is used to decrypt the contents of the lock, allowing the user to view them.
+
+### Master Password Rules
+
+Ensuring the strength of the master password is critical as it is the primary point of failure for a password manager. 
+To prevent it from being easily guessed or cracked through dictionary attacks, we enforce stringent rules both on the frontend and backend:
+
+1. Minimum Length: At least 14 characters.
+2. Character Requirements:
+   * At least 1 uppercase letter (A-Z)
+   * At least 1 lowercase letter (a-z)
+   * At least 1 digit (0-9)
+   * At least 1 special character (e.g., !, @, #, $)
+3. No Whitespace: Passwords cannot contain spaces or other whitespace characters.
+4. Avoid Common Patterns: Passwords must not include common sequences or repeated characters (e.g., "12345" or "abcdef").
+5. Dictionary Check: Passwords must not match entries in a comprehensive list of common passwords.
+
+Additionally, we provide functionality for generating strong passwords that meet all these requirements, ensuring users have secure and complex master passwords.
 
 ### Database Layout
 

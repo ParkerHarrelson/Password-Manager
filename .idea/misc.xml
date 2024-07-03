@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/api/cipherlock_api/pom.xml" />
         <option value="$PROJECT_DIR$/libraries/lib_cipherlock_crypto/pom.xml" />
         <option value="$PROJECT_DIR$/libraries/lib_cipherlock_entity/pom.xml" />
+        <option value="$PROJECT_DIR$/libraries/lib_cipherlock_dto/pom.xml" />
       </list>
     </option>
   </component>
